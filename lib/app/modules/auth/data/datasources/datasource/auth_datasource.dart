@@ -1,3 +1,5 @@
+import 'package:petfolio/app/core/shared/models/user_model.dart';
+
 abstract class AuthDatasource {
-  Future<String> login(String email, String password);
+  Future<UserModel> login(String email, String password);
 }

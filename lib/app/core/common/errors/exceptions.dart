@@ -1,8 +1,9 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 class ServerException implements Exception {
-  final String? message;
+  final String title;
+  final String? description;
   final StackTrace? stackTrace;
-  ServerException({this.message, this.stackTrace});
+  ServerException({required this.title, this.stackTrace, this.description});
 }
 
 class DBException implements Exception {

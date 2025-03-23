@@ -32,7 +32,7 @@ class _NotConnectionPageState extends State<NotConnectionPage> {
               children: [
                 SizedBox(
                   width: 300,
-                  child: SvgPicture.asset(AppAssets.svgs.logoIcon, height: 80),
+                  child: SvgPicture.asset(AppAssets.svgs.logo, height: 80),
                 ).hero('logo'),
                 const Gap(50),
                 Text(

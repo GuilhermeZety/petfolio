@@ -3,6 +3,7 @@
 class AppRoutes {
   static const String splash = '/';
   static const String notConnection = '/not_connection/';
+  static const String apresentation = '/apresentation/';
   static const String auth = '/auth/';
   static const String sync = '/sync/';
   static const String home = '/home/';

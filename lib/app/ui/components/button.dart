@@ -97,11 +97,15 @@ class _ButtonState extends State<Button> {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: (widget.backgroundColor ?? (widget.secondary ? context.colorScheme.tertiaryContainer : AppColors.primary)).changeOpacity(widget.disabled ? 0.6 : 1),
-      borderRadius: BorderRadius.circular(10),
+      color: (widget.backgroundColor ??
+              (widget.secondary
+                  ? context.colorScheme.tertiaryContainer
+                  : AppColors.primary))
+          .changeOpacity(widget.disabled ? 0.6 : 1),
+      borderRadius: BorderRadius.circular(100),
       child: InkWell(
         onTap: action,
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: BorderRadius.circular(100),
         child: AnimatedContainer(
           duration: const Duration(milliseconds: 150),
           width: widget.width,
@@ -109,12 +113,22 @@ class _ButtonState extends State<Button> {
           child: DefaultTextStyle(
             style: TextStyle(
               fontFamily: AppFonts.defaultFont,
-              color: widget.foregroundColor ?? (context.isDark ? AppColors.grey_300 : AppColors.primary),
+              color:
+                  widget.foregroundColor ??
+                  (context.isDark ? AppColors.grey_300 : AppColors.primary),
               fontSize: 16,
               fontWeight: AppFonts.bold,
               letterSpacing: 0.3,
             ),
-            child: Center(child: isLoading ? Loader(size: widget.child.runtimeType == Row ? 24 : 16, inverted: true) : widget.child),
+            child: Center(
+              child:
+                  isLoading
+                      ? Loader(
+                        size: widget.child.runtimeType == Row ? 24 : 16,
+                        inverted: true,
+                      )
+                      : widget.child,
+            ),
           ),
         ),
       ),

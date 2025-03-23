@@ -54,11 +54,9 @@ class TreaterService {
           ),
         );
       } on ServerException catch (e, stt) {
-        log(e.message ?? e.toString(), stackTrace: stt);
+        log(e.title, stackTrace: stt);
 
-        return Either.failure(
-          Failure(title: e.message ?? errorIdentification ?? '', stackTrace: stt),
-        );
+        return Either.failure(Failure(title: e.title, stackTrace: stt));
       } on Exception catch (e, stt) {
         log(e.toString(), stackTrace: stt);
 
@@ -74,7 +72,7 @@ class TreaterService {
           log(e.toString(), error: e, stackTrace: stt);
         }
         if (e is ServerException) {
-          return Either.failure(ServerFailure(title: e.message ?? ''));
+          return Either.failure(ServerFailure(title: e.title));
         }
         return Either.failure(Failure(title: e.toString()));
       }

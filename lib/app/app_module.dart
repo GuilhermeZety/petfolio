@@ -4,7 +4,9 @@ import 'package:petfolio/app/core/common/services/connection/connection_service.
 import 'package:petfolio/app/core/common/services/connection/connection_service_impl.dart';
 import 'package:petfolio/app/core/common/services/requests/dio_request_service.dart';
 import 'package:petfolio/app/core/common/services/requests/request_service.dart';
+import 'package:petfolio/app/modules/apresentation/presentation/pages/apresentation_page.dart';
 import 'package:petfolio/app/modules/auth/auth_module.dart';
+import 'package:petfolio/app/modules/home/home_module.dart';
 import 'package:petfolio/app/modules/not_connection/presentation/pages/not_connection_page.dart';
 import 'package:petfolio/app/modules/not_found/presentation/pages/not_found_page.dart';
 import 'package:petfolio/app/modules/splash/splash_module.dart';
@@ -33,16 +35,22 @@ class AppModule extends Module {
       transition: TransitionType.fadeIn,
       duration: 700.ms,
     );
-    // r.module(
-    //   '/home/',
-    //   module: HomeModule(),
-    //   transition: TransitionType.fadeIn,
-    //   duration: 500.ms,
-    // );
+    r.module(
+      '/home/',
+      module: HomeModule(),
+      transition: TransitionType.fadeIn,
+      duration: 500.ms,
+    );
     //CHILDS
     r.child(
       '/not_connection/',
       child: (args) => const NotConnectionPage(),
+      transition: TransitionType.fadeIn,
+      duration: 800.ms,
+    );
+    r.child(
+      '/apresentation/',
+      child: (args) => const ApresentationPage(),
       transition: TransitionType.fadeIn,
       duration: 800.ms,
     );

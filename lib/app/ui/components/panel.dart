@@ -38,7 +38,10 @@ class Panel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (isLoading) {
-      return ShimmedBox(width: width ?? double.infinity, height: height ?? double.infinity);
+      return ShimmedBox(
+        width: width ?? double.infinity,
+        height: height ?? double.infinity,
+      );
     }
 
     return Container(
@@ -66,9 +69,12 @@ class Panel extends StatelessWidget {
           onTap: onTap,
           enableFeedback: true,
           onLongPress: onLongPress,
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: radius ?? BorderRadius.circular(10),
           splashColor: splashColor ?? context.colorScheme.primary.changeOpacity(0.1),
-          overlayColor: WidgetStateProperty.all<Color>(splashColor?.changeOpacity(0.5) ?? context.colorScheme.primary.changeOpacity(0.1)),
+          overlayColor: WidgetStateProperty.all<Color>(
+            splashColor?.changeOpacity(0.5) ??
+                context.colorScheme.primary.changeOpacity(0.1),
+          ),
           child: Padding(padding: padding, child: child),
         ),
       ),

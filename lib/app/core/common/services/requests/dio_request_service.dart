@@ -6,7 +6,6 @@ import 'package:petfolio/app/core/common/services/connection/connection_service.
 import 'package:petfolio/app/core/common/services/requests/errors/not_internet_connection_exception.dart';
 import 'package:petfolio/app/core/common/services/requests/request_result.dart';
 import 'package:petfolio/app/core/common/services/requests/request_service.dart';
-import 'package:petfolio/app/core/shared/features/user/data/datasources/datasource/user_datasource.dart';
 import 'package:petfolio/main.dart';
 
 class DioRequestService extends RequestService {
@@ -14,27 +13,40 @@ class DioRequestService extends RequestService {
   DioRequestService({Dio? dio}) : _dio = dio ?? Dio();
 
   @override
-  Future<RequestResult> get(String url, {Object? body, Map<String, dynamic>? headers, Map<String, dynamic>? queryParameters, bool authenticated = false}) async {
+  Future<RequestResult> get(
+    String url, {
+    Object? body,
+    Map<String, dynamic>? headers,
+    Map<String, dynamic>? queryParameters,
+    bool authenticated = false,
+  }) async {
     try {
       if (!(await _isConnected)) {
         throw NotInternetConnectionException();
       }
-      if (authenticated) {
-        await Modular.get<UserDatasource>().refreshToken();
-      }
+      // if (authenticated) {
+      //   await Modular.get<UserDatasource>().refreshToken();
+      // }
       var response = await _dio.get(
         url,
         data: body,
         queryParameters: queryParameters,
         options: Options(
           headers: {
-            if (authenticated) ...{'Authorization': 'Bearer ${session.userJwt}'},
+            if (authenticated) ...{'Authorization': 'Bearer ${session.user?.token}'},
             ...?headers,
           },
         ),
       );
-      if ((response.statusCode ?? 404) >= 200 && (response.statusCode ?? 404) < 300) {
-        return RequestResult(statusCode: response.statusCode ?? 0, data: response.data, headers: response.headers.map, success: true, message: response.statusMessage ?? '');
+      if ((response.statusCode ?? 404) >= 200 &&
+          (response.statusCode ?? 404) < 300) {
+        return RequestResult(
+          statusCode: response.statusCode ?? 0,
+          data: response.data,
+          headers: response.headers.map,
+          success: true,
+          message: response.statusMessage ?? '',
+        );
       }
       throw Exception('GET Request Error, no success status code returned');
     } catch (e) {
@@ -43,27 +55,40 @@ class DioRequestService extends RequestService {
   }
 
   @override
-  Future<RequestResult> post(String url, {Object? body, Map<String, dynamic>? headers, Map<String, dynamic>? queryParameters, bool authenticated = false}) async {
+  Future<RequestResult> post(
+    String url, {
+    Object? body,
+    Map<String, dynamic>? headers,
+    Map<String, dynamic>? queryParameters,
+    bool authenticated = false,
+  }) async {
     try {
       if (!(await _isConnected)) {
         throw NotInternetConnectionException();
       }
-      if (authenticated) {
-        await Modular.get<UserDatasource>().refreshToken();
-      }
+      // if (authenticated) {
+      //   await Modular.get<UserDatasource>().refreshToken();
+      // }
       var response = await _dio.post(
         url,
         data: body,
         queryParameters: queryParameters,
         options: Options(
           headers: {
-            if (authenticated) ...{'Authorization': 'Bearer ${session.userJwt}'},
+            if (authenticated) ...{'Authorization': 'Bearer ${session.user?.token}'},
             ...?headers,
           },
         ),
       );
-      if ((response.statusCode ?? 404) >= 200 && (response.statusCode ?? 404) < 300) {
-        return RequestResult(statusCode: response.statusCode ?? 0, data: response.data, headers: response.headers.map, success: true, message: response.statusMessage ?? '');
+      if ((response.statusCode ?? 404) >= 200 &&
+          (response.statusCode ?? 404) < 300) {
+        return RequestResult(
+          statusCode: response.statusCode ?? 0,
+          data: response.data,
+          headers: response.headers.map,
+          success: true,
+          message: response.statusMessage ?? '',
+        );
       }
       throw Exception('POST Request Error, no success status code returned');
     } on DioException catch (e) {
@@ -75,27 +100,40 @@ class DioRequestService extends RequestService {
   }
 
   @override
-  Future<RequestResult> put(String url, {Object? body, Map<String, dynamic>? headers, Map<String, dynamic>? queryParameters, bool authenticated = false}) async {
+  Future<RequestResult> put(
+    String url, {
+    Object? body,
+    Map<String, dynamic>? headers,
+    Map<String, dynamic>? queryParameters,
+    bool authenticated = false,
+  }) async {
     try {
       if (!(await _isConnected)) {
         throw NotInternetConnectionException();
       }
-      if (authenticated) {
-        await Modular.get<UserDatasource>().refreshToken();
-      }
+      // if (authenticated) {
+      //   await Modular.get<UserDatasource>().refreshToken();
+      // }
       var response = await _dio.put(
         url,
         data: body,
         queryParameters: queryParameters,
         options: Options(
           headers: {
-            if (authenticated) ...{'Authorization': 'Bearer ${session.userJwt}'},
+            if (authenticated) ...{'Authorization': 'Bearer ${session.user?.token}'},
             ...?headers,
           },
         ),
       );
-      if ((response.statusCode ?? 404) >= 200 && (response.statusCode ?? 404) < 300) {
-        return RequestResult(statusCode: response.statusCode ?? 0, data: response.data, headers: response.headers.map, success: true, message: response.statusMessage ?? '');
+      if ((response.statusCode ?? 404) >= 200 &&
+          (response.statusCode ?? 404) < 300) {
+        return RequestResult(
+          statusCode: response.statusCode ?? 0,
+          data: response.data,
+          headers: response.headers.map,
+          success: true,
+          message: response.statusMessage ?? '',
+        );
       }
       throw Exception('PUT Request Error, no success status code returned');
     } catch (e) {
@@ -104,27 +142,42 @@ class DioRequestService extends RequestService {
   }
 
   @override
-  Future<RequestResult> patch(String url, {Object? body, Map<String, dynamic>? headers, Map<String, dynamic>? queryParameters, bool authenticated = false}) async {
+  Future<RequestResult> patch(
+    String url, {
+    Object? body,
+    Map<String, dynamic>? headers,
+    Map<String, dynamic>? queryParameters,
+    bool authenticated = false,
+  }) async {
     try {
       if (!(await _isConnected)) {
         throw NotInternetConnectionException();
       }
-      if (authenticated) {
-        await Modular.get<UserDatasource>().refreshToken();
-      }
+      //TODO: Faltante Endpoint de refresh
+
+      // if (authenticated) {
+      //   await Modular.get<UserDatasource>().refreshToken();
+      // }
       var response = await _dio.patch(
         url,
         data: body,
         queryParameters: queryParameters,
         options: Options(
           headers: {
-            if (authenticated) ...{'Authorization': 'Bearer ${session.userJwt}'},
+            if (authenticated) ...{'Authorization': 'Bearer ${session.user?.token}'},
             ...?headers,
           },
         ),
       );
-      if ((response.statusCode ?? 404) >= 200 && (response.statusCode ?? 404) < 300) {
-        return RequestResult(statusCode: response.statusCode ?? 0, data: response.data, headers: response.headers.map, success: true, message: response.statusMessage ?? '');
+      if ((response.statusCode ?? 404) >= 200 &&
+          (response.statusCode ?? 404) < 300) {
+        return RequestResult(
+          statusCode: response.statusCode ?? 0,
+          data: response.data,
+          headers: response.headers.map,
+          success: true,
+          message: response.statusMessage ?? '',
+        );
       }
       throw Exception('PATCH Request Error, no success status code returned');
     } catch (e) {
@@ -133,27 +186,40 @@ class DioRequestService extends RequestService {
   }
 
   @override
-  Future<RequestResult> delete(String url, {Object? body, Map<String, dynamic>? headers, Map<String, dynamic>? queryParameters, bool authenticated = false}) async {
+  Future<RequestResult> delete(
+    String url, {
+    Object? body,
+    Map<String, dynamic>? headers,
+    Map<String, dynamic>? queryParameters,
+    bool authenticated = false,
+  }) async {
     try {
       if (!(await _isConnected)) {
         throw NotInternetConnectionException();
       }
-      if (authenticated) {
-        await Modular.get<UserDatasource>().refreshToken();
-      }
+      // if (authenticated) {
+      //   await Modular.get<UserDatasource>().refreshToken();
+      // }
       var response = await _dio.delete(
         url,
         data: body,
         queryParameters: queryParameters,
         options: Options(
           headers: {
-            if (authenticated) ...{'Authorization': 'Bearer ${session.userJwt}'},
+            if (authenticated) ...{'Authorization': 'Bearer ${session.user?.token}'},
             ...?headers,
           },
         ),
       );
-      if ((response.statusCode ?? 404) >= 200 && (response.statusCode ?? 404) < 300) {
-        return RequestResult(statusCode: response.statusCode ?? 0, data: response.data, headers: response.headers.map, success: true, message: response.statusMessage ?? '');
+      if ((response.statusCode ?? 404) >= 200 &&
+          (response.statusCode ?? 404) < 300) {
+        return RequestResult(
+          statusCode: response.statusCode ?? 0,
+          data: response.data,
+          headers: response.headers.map,
+          success: true,
+          message: response.statusMessage ?? '',
+        );
       }
       throw Exception('DELETE Request Error, no success status code returned');
     } catch (e) {
@@ -161,5 +227,6 @@ class DioRequestService extends RequestService {
     }
   }
 
-  Future<bool> get _isConnected async => await Modular.get<ConnectionService>().isConnected;
+  Future<bool> get _isConnected async =>
+      await Modular.get<ConnectionService>().isConnected;
 }

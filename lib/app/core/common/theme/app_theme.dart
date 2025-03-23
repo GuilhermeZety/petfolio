@@ -120,7 +120,7 @@ class AppTheme {
         fontWeight: FontWeight.normal,
       ),
       border: const OutlineInputBorder(
-        borderRadius: BorderRadius.all(Radius.circular(10)),
+        borderRadius: BorderRadius.all(Radius.circular(15)),
         borderSide: BorderSide(
           width: 1,
           color: AppColors.grey_200,
@@ -129,11 +129,11 @@ class AppTheme {
       ),
       contentPadding: const EdgeInsets.symmetric(vertical: 16, horizontal: 20),
       focusedBorder: const OutlineInputBorder(
-        borderRadius: BorderRadius.all(Radius.circular(10)),
+        borderRadius: BorderRadius.all(Radius.circular(15)),
         borderSide: BorderSide(color: AppColors.primary, width: 2, strokeAlign: 1.0),
       ),
       enabledBorder: const OutlineInputBorder(
-        borderRadius: BorderRadius.all(Radius.circular(10)),
+        borderRadius: BorderRadius.all(Radius.circular(15)),
         borderSide: BorderSide(
           width: 1,
           color: AppColors.grey_200,
@@ -142,7 +142,7 @@ class AppTheme {
       ),
       //DISABLE  ------
       disabledBorder: const OutlineInputBorder(
-        borderRadius: BorderRadius.all(Radius.circular(10)),
+        borderRadius: BorderRadius.all(Radius.circular(15)),
         borderSide: BorderSide(
           width: 1,
           color: AppColors.grey_200,
@@ -155,11 +155,11 @@ class AppTheme {
         color: AppColors.red_400.changeOpacity(0.5),
       ),
       errorBorder: const OutlineInputBorder(
-        borderRadius: BorderRadius.all(Radius.circular(10)),
+        borderRadius: BorderRadius.all(Radius.circular(15)),
         borderSide: BorderSide(width: 1, color: AppColors.red_400, strokeAlign: 1.0),
       ),
       focusedErrorBorder: const OutlineInputBorder(
-        borderRadius: BorderRadius.all(Radius.circular(10)),
+        borderRadius: BorderRadius.all(Radius.circular(15)),
         borderSide: BorderSide(width: 2, color: AppColors.red_400, strokeAlign: 1.0),
       ),
     ),

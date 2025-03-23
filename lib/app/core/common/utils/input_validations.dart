@@ -34,7 +34,7 @@ class InputValidations {
 
   static String? emailValidation(String? value) {
     if (value == null || value.isEmpty) {
-      return 'Insira o seu Email';
+      return 'Preencha este campo';
     }
     if (value.length < 10) {
       return 'Insira todo o Email';

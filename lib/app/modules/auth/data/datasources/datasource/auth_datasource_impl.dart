@@ -1,8 +1,10 @@
 import 'dart:developer';
 
+import 'package:dio/dio.dart';
 import 'package:petfolio/app/core/common/constants/app_api_path.dart';
 import 'package:petfolio/app/core/common/errors/exceptions.dart';
 import 'package:petfolio/app/core/common/services/requests/request_service.dart';
+import 'package:petfolio/app/core/shared/models/user_model.dart';
 import 'package:petfolio/app/modules/auth/data/datasources/datasource/auth_datasource.dart';
 
 class AuthDatasourceImpl extends AuthDatasource {
@@ -11,22 +13,28 @@ class AuthDatasourceImpl extends AuthDatasource {
   AuthDatasourceImpl({required this.requestService});
 
   @override
-  Future<String> login(String email, String password) async {
-    var stop = Stopwatch()..start();
+  Future<UserModel> login(String email, String password) async {
     try {
-      var response = await requestService.post(AppApiPath.login, body: {'email': email, 'senha': password});
+      var response = await requestService.post(
+        AppApiPath.login,
+        body: {'email': email, 'password': password},
+      );
 
-      log('Tempo de execução: ${stop.elapsed.inMilliseconds}ms');
-      stop.stop();
       if ((response.statusCode) >= 200 && (response.statusCode) < 300) {
-        return response.data['access_token'];
+        return UserModel.fromMap(response.data['data']);
       } else {
-        throw Exception('Erro ao confirmar o código de verificação');
+        throw Exception('Erro ao fazer login');
       }
-    } catch (err) {
-      log('Tempo de execução: ${stop.elapsed.inMilliseconds}ms');
-      stop.stop();
-      throw ServerException(message: 'Senha ou email inválidos');
+    } on DioException catch (err) {
+      if (err.response?.statusCode == 401) {
+        throw ServerException(title: 'Senha ou email inválidos');
+      }
+      throw ServerException(
+        title: (err.response?.data['message'] ?? 'Ocorreu um erro inesperado!'),
+      );
+    } catch (err, stt) {
+      log(err.toString(), stackTrace: stt);
+      throw ServerException(title: 'Ocorreu um erro inesperado!');
     }
   }
 }

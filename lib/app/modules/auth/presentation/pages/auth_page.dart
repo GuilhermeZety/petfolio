@@ -18,7 +18,7 @@ import 'package:petfolio/app/core/common/utils/url_launcher_utils.dart';
 import 'package:petfolio/app/modules/auth/presentation/controller/auth_page_controller.dart';
 import 'package:petfolio/app/ui/components/button.dart';
 import 'package:petfolio/app/ui/components/inputs/input.dart';
-import 'package:scaffold_gradient_background/scaffold_gradient_background.dart';
+import 'package:petfolio/app/ui/components/panel.dart';
 
 class AuthPage extends StatefulWidget {
   const AuthPage({super.key});
@@ -33,7 +33,7 @@ class _AuthPageState extends State<AuthPage> {
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      OverlayUIUtils.setOverlayStyle(barDark: false);
+      OverlayUIUtils.setOverlayStyle(barDark: true);
     });
     super.initState();
   }
@@ -42,141 +42,167 @@ class _AuthPageState extends State<AuthPage> {
   Widget build(BuildContext context) {
     return PopScope(
       canPop: false,
-      child: ScaffoldGradientBackground(
+      child: Scaffold(
         floatingActionButton: _debugFloatingActionButton(),
-        gradient: AppColors.gradient,
-        body: SizedBox(
-          width: context.width,
-          height: context.height,
-          child: SafeArea(
-            bottom: false,
+        // gradient: AppColors.gradient,
+        body: SafeArea(
+          child: Form(
+            key: controller.formKey,
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    SvgPicture.asset(
-                      AppAssets.svgs.logoIcon,
-                      width: 160,
-                      colorFilter: const ColorFilter.mode(
-                        Colors.white,
-                        BlendMode.srcIn,
-                      ),
-                    ).hero('logo_icon'),
-                    const Gap(16),
-                    SvgPicture.asset(
-                      AppAssets.svgs.logoName,
-                      width: 160,
-                      colorFilter: const ColorFilter.mode(
-                        Colors.white,
-                        BlendMode.srcIn,
-                      ),
-                    ).hero('logo_name'),
-                  ],
-                ).expanded(),
-                Container(
-                  width: context.width,
-                  decoration: BoxDecoration(
-                    color: context.colorScheme.secondaryContainer,
-                    borderRadius: const BorderRadius.only(
-                      topRight: Radius.circular(32),
-                    ),
-                    boxShadow: [
-                      BoxShadow(
-                        color: AppColors.black.changeOpacity(0.15),
-                        blurRadius: 20,
-                        offset: const Offset(0, -4),
-                      ),
-                    ],
-                  ),
-                  child: Form(
-                    key: controller.formKey,
-                    child: Column(
+                    Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'access'.capitalize(),
+                          'Olá,',
+                          style: context.textTheme.titleLarge!,
+                        ).pOnly(top: context.height * 0.08),
+                        Text(
+                          'Bem vindo de volta!',
                           style: context.textTheme.titleLarge!.copyWith(
-                            fontSize: 36,
-                            fontWeight: AppFonts.bold,
+                            fontSize: 32,
                           ),
                         ),
-                        Text(
-                          'welcome_back_insert_your_data_to_access',
-                          style: context.textTheme.bodySmall!,
-                        ),
-                        const Gap(32),
-                        Input.email(
-                          controller.emailController,
-                          hint: 'insert_your_email',
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
-                          validation: InputValidations.emailValidation,
-                          onChange: (_) {
-                            if (mounted) setState(() {});
-                          },
-                        ),
-                        const Gap(12),
-                        Input.password(
-                          controller.passwordController,
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
-                          validation:
-                              (value) => InputValidations.simpleInputValidation(
-                                value,
-                                minLengh: 3,
-                              ),
-                          hint: 'insert_your_password_here',
-                          onChange: (_) {
-                            if (mounted) setState(() {});
-                          },
-                        ),
-                        const Gap(12),
-                        Row(
-                          children: [
-                            GestureDetector(
-                              onTap: () async {
-                                FocusScope.of(context).unfocus();
-
-                                UrlLauncherUtils.to(
-                                  context,
-                                  'https://amaggi.w2o.com.br/forgot-password',
-                                );
-                              },
-                              child: const Text(
-                                'forgot_my_password',
-                                style: TextStyle(
-                                  color: AppColors.grey_500,
-                                  fontWeight: AppFonts.bold,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        const Gap(40),
-                        Button(
+                      ],
+                    ),
+                    const Gap(8),
+                    Text(
+                      // 'welcome_back_insert_your_data_to_access',
+                      'Acesse sua conta e mantenha todas as informações do seu pet sempre à mão. Simples, seguro e rápido!',
+                      style: context.textTheme.bodySmall!,
+                    ),
+                  ],
+                ).slideFade(false, delay: 200.ms),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Gap(32),
+                    Input.email(
+                      controller.emailController,
+                      hint: 'E-mail',
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      validation: InputValidations.emailValidation,
+                      onChange: (_) {
+                        if (mounted) setState(() {});
+                      },
+                    ).slideFade(false, delay: 300.ms),
+                    const Gap(12),
+                    Input.password(
+                      controller.passwordController,
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      validation:
+                          (value) => InputValidations.simpleInputValidation(
+                            value,
+                            minLengh: 3,
+                          ),
+                      hint: 'Senha',
+                      onChange: (_) {
+                        if (mounted) setState(() {});
+                      },
+                    ).slideFade(false, delay: 350.ms),
+                    Row(
+                      children: [
+                        IconButton(
                           onPressed: () async {
                             FocusScope.of(context).unfocus();
-                            await controller.login(context);
+
+                            UrlLauncherUtils.to(context, '//');
                           },
-                          child: Text('access'.capitalize()),
-                        ).expandedH(),
-                        Gap(context.safeArea(AxisDirection.down)),
+                          icon: const Text(
+                            'Esqueceu sua senha?',
+                            style: TextStyle(color: AppColors.grey_400),
+                          ),
+                        ),
                       ],
-                    ).p(32),
-                  ),
-                ).slideFade(true, fadeInit: 0.6, range: 0.2, delay: 0.microseconds),
+                    ).slideFade(false, delay: 400.ms),
+                    _orButton,
+                    const Gap(12),
+                    _oauthButton.expandedH(),
+                  ],
+                ),
+                const Gap(24),
+                _dontHaveAccount,
+                _acessButton.expandedH(),
+                // Gap(context.safeArea(AxisDirection.down)),
               ],
-            ),
+            ).pH(32),
           ),
         ),
       ),
     );
   }
 
+  Widget get _orButton => Row(
+    children: [
+      const Divider(color: AppColors.grey_200).expanded(),
+      const Text('ou', style: TextStyle(color: AppColors.grey_300)).pH(8),
+      const Divider(color: AppColors.grey_200).expanded(),
+    ],
+  ).slideFade(false, delay: 500.ms);
+
+  Widget get _oauthButton => Panel(
+    onTap: () {},
+    radius: BorderRadius.circular(100),
+    border: Border.all(color: AppColors.grey_200),
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        SvgPicture.asset(AppAssets.svgs.google),
+        const Text(
+          'Google',
+          style: TextStyle(fontWeight: AppFonts.semiBold, color: AppColors.primary),
+        ),
+        const Gap(20),
+      ],
+    ),
+  ).slideFade(true, delay: 550.ms);
+  Widget get _dontHaveAccount => IconButton(
+    onPressed: () {
+      //
+    },
+    icon: Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Text.rich(
+          TextSpan(
+            text: 'Ainda não possui conta? ',
+            children: [
+              TextSpan(
+                text: 'Criar uma conta',
+                style: TextStyle(
+                  color: context.colorScheme.primary,
+                  fontWeight: AppFonts.semiBold,
+                  decoration: TextDecoration.underline,
+                  decorationColor: context.colorScheme.primary,
+                ),
+              ),
+            ],
+          ),
+          //
+        ),
+      ],
+
+      //
+    ),
+  ).slideFade(true, delay: 600.ms);
+
+  Widget get _acessButton => Button(
+    onPressed: () async {
+      FocusScope.of(context).unfocus();
+      await controller.login(context);
+    },
+    child: Text('Acessar'.capitalize()),
+  ).slideFade(true, delay: 700.ms).pBottom(32);
+
   Widget? _debugFloatingActionButton() {
     if (!kDebugMode) {
       return null;
     }
-    var accessData = ('dadasd@sdaasd.com', 'senha');
+    var accessData = ('pedro.fabreu97@gmail.com', 'senha123');
 
     return FloatingActionButton(
       heroTag: 'debug',

@@ -52,7 +52,7 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
                     ],
                   ),
                   SvgPicture.asset(
-                    AppAssets.svgs.logoIcon,
+                    AppAssets.svgs.logo,
                     width: 50,
                     colorFilter: const ColorFilter.mode(
                       AppColors.white,

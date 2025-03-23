@@ -121,7 +121,7 @@ class BackAppBar extends StatelessWidget implements PreferredSizeWidget {
                   suffix ??
                       (suffixIcon == null
                           ? SvgPicture.asset(
-                            AppAssets.svgs.logoIcon,
+                            AppAssets.svgs.logo,
                             width: 40,
                             colorFilter: const ColorFilter.mode(
                               AppColors.white,

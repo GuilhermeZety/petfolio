@@ -1,7 +1,7 @@
 name: petfolio
 description: "A new Flutter project."
 publish_to: 'none'
-version: 0.1.0
+version: 0.1.1+2
 
 environment:
   sdk: ^3.7.2
@@ -31,6 +31,7 @@ dependencies:
   shared_preferences: ^2.5.2
   signals: ^6.0.2
   signals_flutter: ^6.0.2
+  smooth_page_indicator: ^1.2.1
   toastification: ^3.0.2
   url_launcher: ^6.3.1
 
@@ -38,6 +39,51 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^5.0.0
+  flutter_launcher_icons: ^0.14.3
+  flutter_native_splash: ^2.4.5
+
+flutter_launcher_icons:
+  android: launcher_icon
+  ios: true
+
+  image_path: "assets/logo/android.png"
+  image_path_ios: "assets/logo/ios.png"
+  adaptive_icon_foreground: "assets/logo/android.png"
+  adaptive_icon_background: "#F6EEE3"
+
+  remove_alpha_ios: true
+
+
+flutter_native_splash:
+  color: "#F2F4F5"
+  android: true
+  ios: true
+  web: false
+
+  image: assets/native_splash.png
+  icon_background_color: "#F2F4F5"
+  branding: assets/native_splash.png
+  branding_mode: bottom
+
+  android_12:
+    image: assets/native_splash.png
+    color: "#F2F4F5"
+    icon_background_color: "#F2F4F5"
+    branding: assets/native_splash.png
 
 flutter:
   uses-material-design: true
+
+  assets:
+    - assets/svgs/
+    - assets/fonts/
+
+  fonts:
+    - family: Duplet
+      fonts:
+        - asset: assets/fonts/Duplet/Duplet-Regular.otf
+          weight: 400
+        - asset: assets/fonts/Duplet/Duplet-Semibold.otf
+          weight: 600
+        - asset: assets/fonts/Duplet/Duplet-Bold.otf
+          weight: 700
