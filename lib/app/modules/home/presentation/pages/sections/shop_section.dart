@@ -20,12 +20,7 @@ class _ShopSectionState extends State<ShopSection> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          SvgPicture.asset(
-            AppAssets.svgs.playCat,
-            width: 200,
-
-            //
-          ),
+          SvgPicture.asset(AppAssets.svgs.playCat, width: 200),
           const SizedBox(height: 16),
           const Text(
             'Novidade chegando!',
@@ -38,7 +33,6 @@ class _ShopSectionState extends State<ShopSection> {
           const Gap(16),
           const Text(
             'Em breve, uma loja cheia de produtos incríveis para o seu pet. Fique ligado!',
-
             style: TextStyle(fontSize: 14, color: AppColors.grey_500),
             textAlign: TextAlign.center,
           ).pH(context.width * .1),

@@ -33,10 +33,10 @@ class _NotConnectionPageState extends State<NotConnectionPage> {
                 SizedBox(
                   width: 300,
                   child: SvgPicture.asset(AppAssets.svgs.logo, height: 80),
-                ).hero('logo'),
+                ).hero('logo_icon'),
                 const Gap(50),
                 Text(
-                  'oops',
+                  'Oops',
                   style: TextStyle(
                     color: context.textTheme.titleLarge!.color,
                     fontSize: 24,
@@ -45,7 +45,7 @@ class _NotConnectionPageState extends State<NotConnectionPage> {
                 ),
                 const Gap(10),
                 Text(
-                  'no_internet_connection_message',
+                  'Parece que você está sem conexão com a internet. \n\nVerifique sua conexão e tente novamente.',
                   style: TextStyle(
                     color: context.textTheme.titleMedium!.color,
                     fontSize: 16,
@@ -60,7 +60,7 @@ class _NotConnectionPageState extends State<NotConnectionPage> {
                     AppRoutes.splash,
                     (_) => false,
                   ),
-              child: const Text('try_again'),
+              child: const Text('Tentar Novamente'),
             ).expandedH(),
           ],
         ),
