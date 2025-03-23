@@ -21,4 +21,8 @@ class AppSvgs {
   final String girlCat = '$_path/girl_cat.svg';
   final String girlCat2 = '$_path/girl_cat_2.svg';
   final String google = '$_path/google.svg';
+  final String pet = '$_path/pet.svg';
+  final String shoppingBag = '$_path/shopping_bag.svg';
+  final String profile = '$_path/profile.svg';
+  final String playCat = '$_path/play_cat.svg';
 }

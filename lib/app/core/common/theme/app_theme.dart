@@ -12,7 +12,7 @@ class AppTheme {
   static ThemeData light = ThemeData(
     fontFamily: AppFonts.defaultFont,
     primarySwatch: AppColors.primary.toMaterialColor(),
-    scaffoldBackgroundColor: AppColors.grey_50,
+    scaffoldBackgroundColor: AppColors.grey_100,
     canvasColor: AppColors.white,
     primaryColor: AppColors.white,
     textSelectionTheme: TextSelectionThemeData(

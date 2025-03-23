@@ -3,12 +3,13 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:gap/gap.dart';
+import 'package:petfolio/app/core/common/constants/app_assets.dart';
 import 'package:petfolio/app/core/common/constants/app_routes.dart';
 import 'package:petfolio/app/core/common/extensions/context_extension.dart';
 import 'package:petfolio/app/core/common/extensions/widget/widget_extension.dart';
 import 'package:petfolio/app/core/common/theme/app_colors.dart';
-import 'package:petfolio/app/core/common/theme/app_fonts.dart';
 import 'package:signals/signals_flutter.dart';
 
 class NavBar extends StatefulWidget {
@@ -40,12 +41,12 @@ class _NavBarState extends State<NavBar> with SignalsMixin {
     return ColoredBox(
       color: context.colorScheme.primaryContainer,
       child: Container(
-        height: 75 + context.mq.padding.bottom,
+        height: 70 + context.mq.padding.bottom,
         decoration: BoxDecoration(
           color: context.colorScheme.secondaryContainer,
           borderRadius: const BorderRadius.only(
-            topLeft: Radius.circular(10),
-            topRight: Radius.circular(10),
+            topLeft: Radius.circular(20),
+            topRight: Radius.circular(20),
           ),
           boxShadow: [
             BoxShadow(
@@ -58,41 +59,27 @@ class _NavBarState extends State<NavBar> with SignalsMixin {
         ),
         child: Column(
           children: [
-            Stack(
+            Row(
               children: [
-                Row(
-                  children: [
-                    AnimatedContainer(
-                      width: context.width / 2,
-                      margin: EdgeInsets.only(
-                        left: controller.index.value < 1 ? 0 : context.width / 2,
-                      ),
-                      duration: duration,
-                      curve: Curves.easeOut,
-                      decoration: BoxDecoration(
-                        color: AppColors.primary,
-                        borderRadius: BorderRadius.only(
-                          topLeft: const Radius.circular(10),
-                          topRight: const Radius.circular(10),
-                          bottomLeft:
-                              controller.index.value == 0
-                                  ? Radius.zero
-                                  : const Radius.circular(10),
-                          bottomRight:
-                              controller.index.value == 1
-                                  ? Radius.zero
-                                  : const Radius.circular(10),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                Row(
-                  children: [
-                    _buildNavItem(0, 'home', Icons.home_outlined).expanded(),
-                    _buildNavItem(1, 'profile', Icons.person_outlined).expanded(),
-                  ],
-                ),
+                _buildNavItem(
+                  0,
+                  'Inicio',
+                  null,
+                  icon: Icons.pets_rounded,
+                ).expanded(),
+                _buildNavItem(1, 'Meus Pets', AppAssets.svgs.pet).expanded(),
+                _buildNavItem(
+                  2,
+                  'Store',
+                  AppAssets.svgs.shoppingBag,
+                  forceHeight: true,
+                ).expanded(),
+                _buildNavItem(
+                  3,
+                  'Profile',
+                  AppAssets.svgs.profile,
+                  forceHeight: true,
+                ).expanded(),
               ],
             ).expanded(),
             Gap(context.mq.padding.bottom),
@@ -102,7 +89,13 @@ class _NavBarState extends State<NavBar> with SignalsMixin {
     );
   }
 
-  Widget _buildNavItem(int index, String title, IconData icon) {
+  Widget _buildNavItem(
+    int index,
+    String title,
+    String? svg, {
+    IconData? icon,
+    bool forceHeight = false,
+  }) {
     return GestureDetector(
       onTap: () {
         if (widget.forceTo) {
@@ -115,33 +108,48 @@ class _NavBarState extends State<NavBar> with SignalsMixin {
       child: Container(
         color: Colors.transparent,
         child: Center(
-          child: Row(
+          child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               AnimatedSwitcher(
                 duration: duration,
-                child: Icon(
-                  icon,
-                  key: ValueKey(controller.index.value == index),
-                  color:
-                      controller.index.value == index
-                          ? AppColors.white
-                          : context.isDark
-                          ? AppColors.primary.lighten(0.1)
-                          : AppColors.primary,
-                  size: 24,
+                child: Builder(
+                  builder: (context) {
+                    if (icon != null) {
+                      return Icon(
+                        icon,
+                        key: ValueKey(controller.index.value.toString()),
+                        color:
+                            controller.index.value == index
+                                ? AppColors.primary
+                                : AppColors.grey_400,
+                        size: 24,
+                      );
+                    }
+
+                    return SvgPicture.asset(
+                      svg!,
+                      key: ValueKey(controller.index.value.toString()),
+                      colorFilter: ColorFilter.mode(
+                        controller.index.value == index
+                            ? AppColors.primary
+                            : AppColors.grey_400,
+                        BlendMode.srcIn,
+                      ),
+                      width: 24,
+                      height: forceHeight ? 24 : null,
+                    );
+                  },
                 ),
               ),
-              const Gap(12),
+              const Gap(4),
               AnimatedDefaultTextStyle(
                 style: TextStyle(
+                  fontSize: 10,
                   color:
                       controller.index.value == index
-                          ? AppColors.white
-                          : context.isDark
-                          ? AppColors.primary.lighten(0.1)
-                          : AppColors.primary,
-                  fontWeight: AppFonts.bold,
+                          ? AppColors.primary
+                          : AppColors.grey_400,
                 ),
                 duration: duration,
                 child: Text(title),

@@ -22,7 +22,7 @@ class Panel extends StatelessWidget {
     super.key,
     this.padding = const EdgeInsets.all(20),
     this.child,
-    this.withShadow = true,
+    this.withShadow = false,
     this.isLoading = false,
     this.width,
     this.height,

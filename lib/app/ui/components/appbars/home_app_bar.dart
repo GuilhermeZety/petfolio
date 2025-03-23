@@ -1,73 +1,70 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:gap/gap.dart';
-import 'package:petfolio/app/core/common/constants/app_assets.dart';
 import 'package:petfolio/app/core/common/extensions/context_extension.dart';
 import 'package:petfolio/app/core/common/extensions/widget/widget_extension.dart';
 import 'package:petfolio/app/core/common/theme/app_colors.dart';
-import 'package:petfolio/app/core/common/theme/app_fonts.dart';
 import 'package:petfolio/app/core/common/utils/overlay_ui_utils.dart';
+import 'package:petfolio/app/ui/components/image_cached.dart';
+import 'package:petfolio/app/ui/components/panel.dart';
 import 'package:petfolio/main.dart';
 
-class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
+class HomeAppBar extends StatelessWidget {
   const HomeAppBar({super.key});
 
   @override
   Widget build(BuildContext context) {
-    OverlayUIUtils.setOverlayStyle(barDark: false);
+    OverlayUIUtils.setOverlayStyle(barDark: true);
     return Column(
       children: [
-        Container(
-          height: context.safeArea(AxisDirection.up) + 94,
-          padding: const EdgeInsets.all(12),
+        Panel(
+          padding: const EdgeInsets.all(16),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Gap(context.safeArea(AxisDirection.up)),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
+                  ImageCached(
+                    url: session.user?.avatarUrl,
+                    width: 50,
+                    height: 50,
+                    radius: 10,
+                  ),
+                  const Gap(16),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Material(
-                        color: Colors.transparent,
-                        child: Text(
-                          '${'hello'}, ${session.user!.name.split(' ').first}',
-                          style: const TextStyle(
-                            fontSize: 18,
-                            color: AppColors.white,
-                            fontWeight: AppFonts.bold,
-                          ),
-                        ),
-                      ).hero('app_title'),
                       Text(
-                        'good_work_day',
-                        style: TextStyle(
-                          fontSize: 12,
-                          color: AppColors.white.changeOpacity(0.7),
+                        'Olá, ${session.user?.name.split(' ').first}',
+                        style: const TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: AppColors.grey_800,
                         ),
+                      ),
+                      Text(
+                        '${session.user?.address.cidade}, ${session.user?.address.pais}',
+                        style: const TextStyle(fontSize: 12),
                       ),
                     ],
                   ),
-                  SvgPicture.asset(
-                    AppAssets.svgs.logo,
-                    width: 50,
-                    colorFilter: const ColorFilter.mode(
-                      AppColors.white,
-                      BlendMode.srcIn,
+                  const Spacer(),
+                  Panel(
+                    padding: const EdgeInsets.all(10),
+                    radius: BorderRadius.circular(8),
+                    border: Border.all(color: Colors.grey.shade200),
+                    child: const Icon(
+                      Icons.notifications_none_outlined,
+                      size: 20,
+                      color: AppColors.grey_500,
                     ),
-                  ).hero('small_logo'),
+                  ),
                 ],
-              ).pH(24),
+              ),
             ],
           ),
-        ),
+        ).pOnly(top: context.safeArea(AxisDirection.up) + 16, right: 16, left: 16),
       ],
     );
   }
-
-  @override
-  Size get preferredSize => const Size(double.infinity, 80);
 }
