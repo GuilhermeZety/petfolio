@@ -99,7 +99,7 @@ class _ButtonState extends State<Button> {
     return Material(
       color: (widget.backgroundColor ??
               (widget.secondary
-                  ? context.colorScheme.tertiaryContainer
+                  ? context.colorScheme.primaryContainer
                   : AppColors.primary))
           .changeOpacity(widget.disabled ? 0.6 : 1),
       borderRadius: BorderRadius.circular(100),

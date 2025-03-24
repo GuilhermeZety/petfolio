@@ -1,10 +1,10 @@
 // ignore_for_file: use_build_context_synchronously
 
+import 'package:auto_size_text/auto_size_text.dart';
+import 'package:brasil_fields/brasil_fields.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:gap/gap.dart';
-import 'package:petfolio/app/core/common/constants/app_assets.dart';
 import 'package:petfolio/app/core/common/extensions/context_extension.dart';
 import 'package:petfolio/app/core/common/extensions/widget/widget_extension.dart';
 import 'package:petfolio/app/core/common/theme/app_colors.dart';
@@ -15,7 +15,6 @@ import 'package:petfolio/app/ui/components/appbars/back_app_bar.dart';
 import 'package:petfolio/app/ui/components/image_cached.dart';
 import 'package:petfolio/app/ui/components/nav_bar.dart';
 import 'package:petfolio/app/ui/components/panel.dart';
-import 'package:petfolio/app/ui/components/panel_background.dart';
 import 'package:petfolio/app/ui/components/refresh_page.dart';
 import 'package:petfolio/main.dart';
 
@@ -62,97 +61,133 @@ class _ProfilePageState extends State<ProfilePage> {
           // }
         },
         displacement: 100,
-        child: Stack(
+        child: Column(
+          spacing: 16,
           children: [
-            Column(
-              children: [
-                BackAppBar(
-                  backAction: () {
-                    navController.changePage(0);
-                  },
-                  suffix: SvgPicture.asset(
-                    AppAssets.svgs.logo,
-                    width: 50,
-                    colorFilter: const ColorFilter.mode(
-                      AppColors.white,
-                      BlendMode.srcIn,
-                    ),
-                  ),
-                ),
-
-                PanelBackground(
-                  child: Column(
-                    children: [
-                      Align(
-                        alignment: Alignment.centerRight,
-                        child: Text(
-                          '${'Versão'}: ${packageInfo.version}',
-                          style: const TextStyle(color: AppColors.grey_400),
-                        ),
-                      ).pRight(24),
-                      const Gap(8),
-                      SingleChildScrollView(
-                        physics: const ClampingScrollPhysics(),
-                        child: Column(
-                          children: [
-                            const Gap(36),
-                            _buildMyDataSection(),
-                            const Gap(12),
-                            _buildLogoutButton(),
-                            Gap(80 + context.mq.padding.bottom),
-                          ],
-                        ),
-                      ).expanded(),
-                    ],
-                  ),
-                ).slideFade(true, range: 0.01, fadeInit: 1).expanded(),
-              ],
+            BackAppBar(
+              title: 'Perfil',
+              showMore: false,
+              onBack: () {
+                Modular.get<AppNavBarController>().changePage(0);
+              },
+              // suffix: SvgPicture.asset(
+              //   AppAssets.svgs.logo,
+              //   width: 50,
+              //   colorFilter: const ColorFilter.mode(
+              //     AppColors.white,
+              //     BlendMode.srcIn,
+              //   ),
+              // ),
             ),
-            Positioned(
-              top: context.safeArea(AxisDirection.up) + 30,
-              right: 0,
-              left: 0,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(100),
-                      boxShadow: [
-                        BoxShadow(
-                          color: AppColors.black.changeOpacity(0.05),
-                          spreadRadius: 0,
-                          blurRadius: 5,
-                          offset: const Offset(0, 3), // changes position of shadow
-                        ),
-                      ],
-                    ),
-                    child: ImageCached(url: user.avatarUrl, width: 110, height: 110),
-                  ),
-                ],
-              ),
-            ),
+            _myData.pH(16).expandedH(),
+            _buildAddress.pH(16).expandedH(),
+            _buildLogoutButton(),
+            Gap(80 + context.mq.padding.bottom),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildMyDataSection() {
-    return const Panel(
-      padding: EdgeInsets.all(24),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            'Meus Dados',
-            style: TextStyle(fontSize: 20, fontWeight: AppFonts.bold),
+  Widget get _myData => Panel(
+    child: Column(
+      children: [
+        Row(
+          children: [
+            GestureDetector(
+              onTap: () {
+                //TODO: Change Photo
+              },
+              child: Badge(
+                label: const Icon(Icons.edit, size: 12, color: Colors.white),
+                padding: const EdgeInsets.all(4),
+                backgroundColor: AppColors.primary,
+                child: ImageCached(
+                  url: session.user?.avatarUrl,
+                  radius: 16,
+                  width: 80,
+                  height: 80,
+                  //
+                ),
+              ),
+            ),
+            const Gap(16),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                AutoSizeText(
+                  '${session.user?.name}',
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: AppColors.grey_800,
+                  ),
+                  maxLines: 2,
+                ).expandedH(),
+
+                Text(
+                  '+55 ${UtilBrasilFields.obterTelefone(session.user?.phone.replaceAll('+55', '') ?? '')}',
+                  style: const TextStyle(fontSize: 12),
+                ),
+                Text('${session.user?.email}', style: const TextStyle(fontSize: 12)),
+              ],
+            ).expanded(),
+          ],
+        ),
+        const Gap(16),
+        Panel(
+          color: context.colorScheme.primaryContainer,
+          onTap: () {
+            //
+          },
+          child: const Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Gap(16),
+              Text(
+                'Editar meus dados',
+                style: TextStyle(
+                  fontWeight: AppFonts.semiBold,
+                  color: AppColors.grey_500,
+                ),
+              ),
+              Icon(
+                Icons.arrow_forward_ios_rounded,
+                color: AppColors.grey_500,
+                size: 16,
+              ),
+            ],
           ),
-          Gap(4),
-        ],
-      ),
-    );
-  }
+        ),
+      ],
+    ),
+  );
+
+  Widget get _buildAddress => Panel(
+    onTap: () {
+      //
+    },
+    child: Column(
+      children: [
+        Row(
+          children: [
+            const Icon(Icons.place_rounded, color: AppColors.grey_800, size: 16),
+            const Gap(4),
+            const Text(
+              'Endereço',
+              style: TextStyle(fontWeight: AppFonts.bold, color: AppColors.grey_800),
+            ).expanded(),
+
+            const Icon(Icons.edit_rounded, color: AppColors.primary, size: 16),
+          ],
+        ),
+        const Gap(16),
+        Text(
+          session.user?.address.address ?? '',
+          style: const TextStyle(color: AppColors.grey_400),
+        ).expandedH(),
+      ],
+    ),
+  );
 
   Widget _buildLogoutButton() {
     return TextButton(
@@ -165,7 +200,7 @@ class _ProfilePageState extends State<ProfilePage> {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
       ),
       child: const Text(
-        'logout',
+        'Sair do app',
         style: TextStyle(
           fontSize: 14,
           fontWeight: AppFonts.bold,

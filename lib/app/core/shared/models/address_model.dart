@@ -84,4 +84,7 @@ class AddressModel extends Equatable {
 
   @override
   bool get stringify => true;
+
+  String get address =>
+      '$rua, ${numero ?? ''}, ${complemento ?? ''}, $bairro, $cidade - $estado, $pais';
 }

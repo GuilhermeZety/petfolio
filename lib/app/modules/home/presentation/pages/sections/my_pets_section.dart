@@ -5,20 +5,20 @@ import 'package:petfolio/app/core/common/extensions/context_extension.dart';
 import 'package:petfolio/app/core/common/extensions/widget/widget_extension.dart';
 import 'package:petfolio/app/core/common/theme/app_colors.dart';
 import 'package:petfolio/app/core/shared/models/user_model.dart';
-import 'package:petfolio/app/ui/components/appbars/home_app_bar.dart';
+import 'package:petfolio/app/ui/components/appbars/back_app_bar.dart';
 import 'package:petfolio/app/ui/components/image_cached.dart';
 import 'package:petfolio/app/ui/components/nav_bar.dart';
 import 'package:petfolio/app/ui/components/panel.dart';
 import 'package:petfolio/main.dart';
 
-class InitialSection extends StatefulWidget {
-  const InitialSection({super.key});
+class MyPetsSection extends StatefulWidget {
+  const MyPetsSection({super.key});
 
   @override
-  State<InitialSection> createState() => _InitialSectionState();
+  State<MyPetsSection> createState() => _MyPetsSectionState();
 }
 
-class _InitialSectionState extends State<InitialSection> {
+class _MyPetsSectionState extends State<MyPetsSection> {
   AppNavBarController navController = Modular.get();
   UserModel user = session.user!;
 
@@ -33,9 +33,13 @@ class _InitialSectionState extends State<InitialSection> {
       child: Column(
         spacing: 16,
         children: [
-          const HomeAppBar(),
-          _myPets,
-          //
+          BackAppBar(
+            title: 'Seus Pets',
+            onBack: () {
+              Modular.get<AppNavBarController>().changePage(0);
+              //
+            },
+          ),
         ],
       ),
     );
@@ -84,14 +88,7 @@ class _InitialSectionState extends State<InitialSection> {
                 child: Column(
                   spacing: 4,
                   children: [
-                    ImageCached(
-                      url:
-                          e.foto ??
-                          'https://media.istockphoto.com/id/541833910/vector/dog-and-cat-icon.jpg?s=612x612&w=0&k=20&c=n8AwpvJKqLKiHXDQUMeIN_PohTMxLFZ-LvlHg-PDgmc=',
-                      width: 60,
-                      height: 60,
-                      radius: 8,
-                    ),
+                    ImageCached(url: e.foto, width: 60, height: 60, radius: 8),
                     AutoSizeText(
                       e.name ?? 'sem nome',
                       style: const TextStyle(fontSize: 12, color: AppColors.black),

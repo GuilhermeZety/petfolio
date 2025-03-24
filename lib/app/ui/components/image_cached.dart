@@ -24,7 +24,7 @@ class _ImageCachedState extends State<ImageCached> {
       child: CachedNetworkImage(
         imageUrl:
             url ??
-            'https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/65761296352685.5eac4787a4720.jpg',
+            'https://static.vecteezy.com/system/resources/previews/003/715/527/non_2x/picture-profile-icon-male-icon-human-or-people-sign-and-symbol-vector.jpg',
         width: widget.width ?? 50,
         height: widget.height ?? 50,
         alignment: Alignment.topCenter,

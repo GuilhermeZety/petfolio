@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:gap/gap.dart';
 import 'package:petfolio/app/core/common/extensions/context_extension.dart';
 import 'package:petfolio/app/core/common/extensions/widget/widget_extension.dart';
 import 'package:petfolio/app/core/common/theme/app_colors.dart';
 import 'package:petfolio/app/core/common/utils/overlay_ui_utils.dart';
 import 'package:petfolio/app/ui/components/image_cached.dart';
+import 'package:petfolio/app/ui/components/nav_bar.dart';
 import 'package:petfolio/app/ui/components/panel.dart';
 import 'package:petfolio/main.dart';
 
@@ -17,6 +19,10 @@ class HomeAppBar extends StatelessWidget {
     return Column(
       children: [
         Panel(
+          onTap: () {
+            Modular.get<AppNavBarController>().changePage(3);
+          },
+          height: 82,
           padding: const EdgeInsets.all(16),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,

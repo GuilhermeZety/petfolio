@@ -22,6 +22,7 @@ class LogoutConfirmationModal {
         bottom: Column(
           children: [
             Button(
+              padding: const EdgeInsets.all(16),
               onPressed: () async {
                 await session.logout();
                 Modular.to.pushNamedAndRemoveUntil(AppRoutes.splash, (_) => false);
@@ -30,15 +31,16 @@ class LogoutConfirmationModal {
             ).expandedH(),
             const Gap(6),
             Button.secondary(
+              padding: const EdgeInsets.all(16),
               onPressed: () async => Navigator.of(context).pop(),
               child: const Text('Agora não'),
             ).expandedH(),
           ],
         ),
         child: const Text(
-          'Ao confirmar a saída, você não podera mais acessar o aplicativo, sendo necessário fazer o login novamente.',
+          'Ao confirmar a saída, você não poderá mais acessar o aplicativo, sendo necessário fazer o login novamente.',
           textAlign: TextAlign.center,
-        ).p(20),
+        ),
       ),
     );
   }
