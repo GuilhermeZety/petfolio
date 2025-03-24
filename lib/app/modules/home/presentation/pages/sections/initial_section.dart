@@ -46,7 +46,7 @@ class _InitialSectionState extends State<InitialSection> {
     return _buildMenu(
       'Seus Pets',
       () {
-        return null;
+        Modular.get<AppNavBarController>().changePage(1);
       },
       SingleChildScrollView(
         scrollDirection: Axis.horizontal,
@@ -84,14 +84,7 @@ class _InitialSectionState extends State<InitialSection> {
                 child: Column(
                   spacing: 4,
                   children: [
-                    ImageCached(
-                      url:
-                          e.foto ??
-                          'https://media.istockphoto.com/id/541833910/vector/dog-and-cat-icon.jpg?s=612x612&w=0&k=20&c=n8AwpvJKqLKiHXDQUMeIN_PohTMxLFZ-LvlHg-PDgmc=',
-                      width: 60,
-                      height: 60,
-                      radius: 8,
-                    ),
+                    ImageCached(url: e.photo, width: 60, height: 60, radius: 8),
                     AutoSizeText(
                       e.name ?? 'sem nome',
                       style: const TextStyle(fontSize: 12, color: AppColors.black),

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:petfolio/app/modules/home/presentation/pages/sections/initial_section.dart';
 import 'package:petfolio/app/modules/home/presentation/pages/sections/my_pets_section.dart';
-import 'package:petfolio/app/modules/home/presentation/pages/sections/profile_page.dart';
+import 'package:petfolio/app/modules/home/presentation/pages/sections/profile_section.dart';
 import 'package:petfolio/app/modules/home/presentation/pages/sections/shop_section.dart';
 import 'package:petfolio/app/ui/components/nav_bar.dart';
 
@@ -30,7 +30,7 @@ class _HomePageState extends State<HomePage> {
             const InitialSection(),
             const MyPetsSection(),
             const ShopSection(),
-            const ProfilePage(),
+            const ProfileSection(),
             //
           ],
         ),

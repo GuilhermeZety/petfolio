@@ -128,4 +128,8 @@ class PetModel extends Equatable {
 
   @override
   bool get stringify => true;
+
+  String get photo =>
+      foto ??
+      'https://media.istockphoto.com/id/541833910/vector/dog-and-cat-icon.jpg?s=612x612&w=0&k=20&c=n8AwpvJKqLKiHXDQUMeIN_PohTMxLFZ-LvlHg-PDgmc=';
 }

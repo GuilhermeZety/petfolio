@@ -18,14 +18,14 @@ import 'package:petfolio/app/ui/components/panel.dart';
 import 'package:petfolio/app/ui/components/refresh_page.dart';
 import 'package:petfolio/main.dart';
 
-class ProfilePage extends StatefulWidget {
-  const ProfilePage({super.key});
+class ProfileSection extends StatefulWidget {
+  const ProfileSection({super.key});
 
   @override
-  State<ProfilePage> createState() => _ProfilePageState();
+  State<ProfileSection> createState() => _ProfileSectionState();
 }
 
-class _ProfilePageState extends State<ProfilePage> {
+class _ProfileSectionState extends State<ProfileSection> {
   AppNavBarController navController = Modular.get();
   UserModel user = session.user!;
 
